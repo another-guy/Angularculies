@@ -1,0 +1,11 @@
+<div class="input-group" [class.has-error]="hasError">
+
+    <div *ngIf="showGlyphChar()" class="input-group-addon">{{leftIcon}}</div>
+    <div *ngIf="showGlyphIcon()" class="input-group-addon"><span class="glyphicon {{leftIcon}}" aria-hidden="true"></span></div>
+
+    <input [value]="formattedAmount"
+		   (focus)="onFocus($event)"
+           (blur)="onBlur($event.target.value)"
+           class="form-control"
+           type="text">
+</div>
