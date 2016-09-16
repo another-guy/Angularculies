@@ -6,43 +6,43 @@ import { DecimalPipe } from '@angular/common';
     templateUrl: './input-number.component.html',
 })
 export class InputNumberComponent {
-    @Input() public amount: any;
+    @Input() public value: any;
     @Input() public format: string;
     @Input() public leftIcon: any;
     @Output() public update: EventEmitter<any> = new EventEmitter<any>();
 
-    public formattedAmount: any;
+    public formattedValue: any;
     public hasError: boolean = false;
 
     constructor(private decimalPipe: DecimalPipe) { }
 
     ngOnInit() {
-        this.formattedAmount = this.formatAmount(this.amount);
+        this.formattedValue = this.formatValue(this.value);
     }
 
     onFocus(): void {
-        this.formattedAmount = this.amount;
+        this.formattedValue = this.value;
     }
 
-    onBlur(rawAmount: any): void {
-        this.formattedAmount = this.formatAmount(rawAmount);
+    onBlur(rawValue: any): void {
+        this.formattedValue = this.formatValue(rawValue);
 
-        const numericValueIfValid = this.hasError ? rawAmount : +rawAmount;
+        const numericValueIfValid = this.hasError ? rawValue : +rawValue;
         this.update.emit(numericValueIfValid);
     }
 
-    formatAmount(rawAmount: any): any {
+    formatValue(rawValue: any): any {
         try {
-            var formattedAmount = this.decimalPipe.transform(rawAmount, this.format);
+            var formattedValue = this.decimalPipe.transform(rawValue, this.format);
             this.hasError = false;
-            return formattedAmount;
+            return formattedValue;
         } catch (e) {
             console.debug('Value could not be formatted with decimal pipe.',
-                'Value:', rawAmount,
+                'Value:', rawValue,
                 'Format:', this.format,
                 'Pipe:', this.decimalPipe);
             this.hasError = true;
-            return rawAmount;
+            return rawValue;
         }
     }
 

@@ -3,7 +3,7 @@
     <div *ngIf="showGlyphChar()" class="input-group-addon">{{leftIcon}}</div>
     <div *ngIf="showGlyphIcon()" class="input-group-addon"><span class="glyphicon {{leftIcon}}" aria-hidden="true"></span></div>
 
-    <input [value]="formattedAmount"
+    <input [value]="formattedValue"
 		   (focus)="onFocus($event)"
            (blur)="onBlur($event.target.value)"
            class="form-control"

@@ -95,8 +95,8 @@ describe('InputNumberComponent', () => {
     });
 
     describe('validation error', () => {
-        function arrange(amount: any) {
-            sut.amount = amount;
+        function arrange(value: any) {
+            sut.value = value;
             sut.ngOnInit();
         }
 
@@ -116,8 +116,8 @@ describe('InputNumberComponent', () => {
     });
 
     describe(`initialization with format ${FORMAT} and valid input'`, () => {
-        function arrange(amount: any) {
-            sut.amount = amount;
+        function arrange(value: any) {
+            sut.value = value;
         }
 
         validInputs.forEach(input => {
@@ -129,14 +129,14 @@ describe('InputNumberComponent', () => {
                 // Act
                 sut.ngOnInit();
                 // Assert
-                expect(sut.formattedAmount).toEqual(expectedResult);
+                expect(sut.formattedValue).toEqual(expectedResult);
             })
         });
     });
 
     describe(`initialization with format ${FORMAT} and invalid input`, () => {
-        function arrange(amount: any) {
-            sut.amount = amount;
+        function arrange(value: any) {
+            sut.value = value;
         }
 
         invalidInputs.forEach(rawInValidValue => {
@@ -145,102 +145,102 @@ describe('InputNumberComponent', () => {
                 // Act
                 sut.ngOnInit();
                 // Assert
-                expect(sut.formattedAmount).toBe(rawInValidValue);
+                expect(sut.formattedValue).toBe(rawInValidValue);
             })
         });
     });
     
     describe('onFocus', () => {
-        it(`should drop previously formatted valid amount`, () => {
+        it(`should drop previously formatted valid value`, () => {
             // Arrange
-            const validAmount = 123;
-            sut.amount = validAmount;
+            const validValue = 123;
+            sut.value = validValue;
             sut.ngOnInit();
             // Assume
-            expect(sut.formattedAmount).toBe('123.00000');
+            expect(sut.formattedValue).toBe('123.00000');
             
             // Act
             sut.onFocus();
 
             // Assert
-            expect(sut.formattedAmount).toBe(validAmount);
+            expect(sut.formattedValue).toBe(validValue);
         });
 
-        it(`should drop previously formatted invalid amount`, () => {
+        it(`should drop previously formatted invalid value`, () => {
             // Arrange
-            const invalidAmount = 'abracadabra';
-            sut.amount = invalidAmount;
+            const invalidValue = 'abracadabra';
+            sut.value = invalidValue;
             sut.ngOnInit();
             // Assume
-            expect(sut.formattedAmount).toBe(invalidAmount);
+            expect(sut.formattedValue).toBe(invalidValue);
 
             // Act
             sut.onFocus();
 
             // Assert
-            expect(sut.formattedAmount).toBe(invalidAmount);
+            expect(sut.formattedValue).toBe(invalidValue);
         });
     });
 
-    describe('onBlur with valid entered amount', () => {
+    describe('onBlur with valid entered value', () => {
         validInputs.forEach(input => {
             var rawValidValue = input[0];
             var expectedResult = input[1];
             
             it(`should re-format ${rawValidValue} into ${expectedResult}`, () => {
                 // Arrange
-                const validAmount = rawValidValue;
-                sut.amount = validAmount;
+                const validValue = rawValidValue;
+                sut.value = validValue;
                 // Act
-                sut.onBlur(sut.amount);
+                sut.onBlur(sut.value);
                 // Assert
-                expect(sut.formattedAmount).toBe(expectedResult);
+                expect(sut.formattedValue).toBe(expectedResult);
             });
         });
     });
 
-    describe('onBlur with invalid entered amount', () => {
+    describe('onBlur with invalid entered value', () => {
         invalidInputs.forEach(rawInvalidValue => {
             it(`should re-format ${rawInvalidValue} into itself`, () => {
                 // Arrange
-                sut.amount = rawInvalidValue;
+                sut.value = rawInvalidValue;
                 // Act
-                sut.onBlur(sut.amount);
+                sut.onBlur(sut.value);
                 // Assert
-                expect(sut.formattedAmount).toBe(rawInvalidValue);
+                expect(sut.formattedValue).toBe(rawInvalidValue);
             });
         });
     });
 
-    describe('onBlur with valid entered amount', () => {
+    describe('onBlur with valid entered value', () => {
         validInputs.forEach(input => {
             const rawValidValue = input[0];
             const expectedValue = +(<any>rawValidValue);
 
             it(`should fire event with numeric value entered ${expectedValue} for ${rawValidValue}`, () => {
                 // Arrange
-                sut.amount = rawValidValue;
+                sut.value = rawValidValue;
                 spyOn(sut.update, 'emit').and.callThrough();
 
                 // Act
-                sut.onBlur(sut.amount);
+                sut.onBlur(sut.value);
                 // Assert
                 expect(sut.update.emit).toHaveBeenCalledWith(expectedValue);
             });
         });
     });
 
-    describe('onBlur with invalid entered amount', () => {
+    describe('onBlur with invalid entered value', () => {
         invalidInputs.forEach(rawInvalidValue => {
             it(`should fire event with numeric value entered ${rawInvalidValue} for ${rawInvalidValue}`, () => {
                 // Arrange
                 const expectedValue = rawInvalidValue === null ? 0 : rawInvalidValue;
 
-                sut.amount = rawInvalidValue;
+                sut.value = rawInvalidValue;
                 spyOn(sut.update, 'emit').and.callThrough();
 
                 // Act
-                sut.onBlur(sut.amount);
+                sut.onBlur(sut.value);
                 // Assert
                 expect(sut.update.emit).toHaveBeenCalledWith(expectedValue);
             });
